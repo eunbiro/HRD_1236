@@ -28,10 +28,10 @@ public class VacController extends HttpServlet {
 	}
 	
 	protected void doPro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String context = request.getContextPath();
 		String command = request.getServletPath();
 		String site = null;
 		
+		System.out.println(command);
 		VaccresvDAO vacc = new VaccresvDAO();
 		switch (command) {
 		case "/home" :
@@ -61,6 +61,7 @@ public class VacController extends HttpServlet {
 			break;
 		case "/select" :
 			site = vacc.select(request, response);
+			
 			break;
 		case "/result" :
 			site = vacc.result(request, response);

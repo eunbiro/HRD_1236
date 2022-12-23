@@ -66,20 +66,22 @@ public class VaccresvDAO {
 	public String select(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String resvno = request.getParameter("resvno");
 		Vaccresv vacc = new Vaccresv();
-		int result = 0;
+		String result = null;
+		
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement("SELECT B.PNAME, A.JUMIN, "
-					+ "DECODE(SUBSTR(A.JUMIN, '8', '1'), '1', '남', '2', '여') GENDER, "
-					+ "B.TEL, A.RESVDATE, A.RESVTIME, A.VCODE "
-					+ "FROM TBL_VACCRESV_202108 A, TBL_JUMIN_201808 B "
-					+ "WHERE A.JUMIN = B.JUMIN AND RESVNO = " + resvno);
+					+ "DECODE(SUBSTR(A.JUMIN, '8', '1'), '1', '남', '2', '여') GENDER, B.TEL, "
+					+ "SUBSTR(A.RESVDATE, 1, 4) || '년' || SUBSTR(A.RESVDATE, 5, 2) || '월' || SUBSTR(A.RESVDATE, 7, 2) , "
+					+ "SUBSTR(A.RESVTIME, 1, 2) || ':' || SUBSTR(A.RESVTIME, 3, 2), "
+					+ "C.HOSPNAME, C.HOSPTEL, C.HOSPADDR, A.VCODE, A.RESVNO "
+					+ "FROM TBL_VACCRESV_202108 A, TBL_JUMIN_201808 B, TBL_HOSP_202108 C "
+					+ "WHERE A.JUMIN = B.JUMIN AND A.HOSPCODE = C.HOSPCODE "
+					+ "AND A.RESVNO = " + resvno);
 			
 			rs = ps.executeQuery();
 			
-			
 			if (rs.next()) {
-				
 				vacc.setPname(rs.getString(1));
 				vacc.setJumin(rs.getString(2));
 				vacc.setGender(rs.getString(3));
@@ -91,9 +93,14 @@ public class VaccresvDAO {
 				vacc.setHospaddr(rs.getString(9));
 				vacc.setVcode(rs.getString(10));
 				vacc.setResvno(rs.getString(11));
-				
 			}
+			System.out.println(vacc.getPname());
 			
+			if (vacc.getPname() != null) {
+				result = "successlist.jsp";
+			} else {
+				result = "fail.jsp";
+			}
 			
 			request.setAttribute("vacc", vacc);
 			
@@ -103,7 +110,7 @@ public class VaccresvDAO {
 			e.printStackTrace();
 		}
 		
-		return "successlist";
+		return result;
 	}
 	
 	public String result(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -111,7 +118,10 @@ public class VaccresvDAO {
 		
 		try {
 			conn = getConnection();
-			ps = conn.prepareStatement("");
+			ps = conn.prepareStatement("SELECT A.HOSPCODE, A.HOSPNAME, COUNT(B.HOSPCODE) "
+					+ "FROM TBL_HOSP_202108 A, TBL_VACCRESV_202108 B "
+					+ "WHERE A.HOSPCODE = B.HOSPCODE "
+					+ "GROUP BY (A.HOSPCODE, A.HOSPNAME, B.HOSPCODE)");
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -119,10 +129,17 @@ public class VaccresvDAO {
 				
 				hosp.setHospcode(rs.getString(1));
 				hosp.setHospname(rs.getString(2));
-				hosp.setCount(rs.getString(2));
+				hosp.setCount(rs.getString(3));
 				
 				hosps.add(hosp);
+				System.out.println(hosp.getHospcode() + ", " + hosp.getHospname() + "," + hosp.getCount());
 			}
+			
+			request.setAttribute("hosps", hosps);
+			
+			conn.close();
+			ps.close();
+			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

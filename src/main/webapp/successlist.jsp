@@ -16,9 +16,9 @@
 <body>
 	<%@ include file="header.jsp" %>
 	<section>
-		<h2 class="title" style="font-size: 30px;">예약번호:<%=vacc.getResvno()%>>의 접종예약조회</h2>
+		<h2 class="title" style="font-size: 25px;">예약번호:<%=vacc.getResvno()%>의 접종예약조회</h2>
 		<div class="wrap">
-			<table>
+			<table style="width: 1000px;">
 				<tr>
 					<th>이름</th>
 					<th>주민번호</th>

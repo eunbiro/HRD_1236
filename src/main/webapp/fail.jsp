@@ -11,7 +11,7 @@
 	<%@ include file="header.jsp" %>
 	<section>
 		<div class="wrap">
-			<h2 class="title" style="font-size: 30px;">접종예약정보가 존재하지 않습니다!</h2>
+			<h2 class="title" style="font-size: 25px;">접종예약정보가 존재하지 않습니다!</h2>
 			<button class="btn" onclick="location='search';">돌아가기</button>
 		</div>
 	</section>
