@@ -79,7 +79,6 @@ public class VaccresvDAO {
 					+ "WHERE A.JUMIN = B.JUMIN AND A.HOSPCODE = C.HOSPCODE "
 					+ "AND A.RESVNO = " + resvno);
 			
-			rs = ps.executeQuery();
 			
 			if (rs.next()) {
 				vacc.setPname(rs.getString(1));
