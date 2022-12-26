@@ -1,9 +1,0 @@
-function fn_submit() {
-	var fn = document.frm;
-	
-	if (fn.jumin.value == "") {
-		alert("주민번호가 입력되지 않았습니다!");
-		fn.jumin.focus();
-		return false;
-	}
-}

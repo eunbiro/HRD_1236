@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;HRD_1236/src/main/webapp/heafer.jsp&apos; to &apos;header.jsp&apos;" description="Rename resource &apos;heafer.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/heafer.jsp" name="header.jsp" stamp="1671759237353" updateReferences="true"/>
-</session>
