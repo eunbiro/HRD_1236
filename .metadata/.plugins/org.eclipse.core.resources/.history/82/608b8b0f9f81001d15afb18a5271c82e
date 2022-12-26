@@ -1,0 +1,33 @@
+function fn_submit() {
+	var fn = document.frm;
+	
+	if (fn.jumin.value == "") {
+		alert("주민번호가 입력되지 않았습니다!");
+		fn.jumin.focus();
+		return false;
+	}
+	
+	if (fn.name.value == "") {
+		alert("주민번호가 입력되지 않았습니다!");
+		fn.jumin.focus();
+		return false;
+	}
+	
+	if (fn.time.value == "") {
+		alert("주민번호가 입력되지 않았습니다!");
+		fn.jumin.focus();
+		return false;
+	}
+	
+	if (fn.place.value == "") {
+		alert("주민번호가 입력되지 않았습니다!");
+		fn.jumin.focus();
+		return false;
+	}
+	
+	if (fn.jumin.value == "") {
+		alert("주민번호가 입력되지 않았습니다!");
+		fn.jumin.focus();
+		return false;
+	}
+}
